@@ -5,4 +5,29 @@
 
 var stringifyJSON = function(obj) {
   // your code goes here
+  if(typeof obj === 'string'){
+    return '"' + obj + '"';
+  }
+  if(Array.isArray(obj)){
+    var results = [];
+    for(var i = 0; i < obj.length; i++){
+      results.push(stringifyJSON(obj[i]));
+    }
+    return '['+results.join(',')+']';
+  }
+
+  if(obj && typeof obj === 'object'){
+    var result = [];
+    for (var key in obj){
+      if(typeof obj[key] === 'function' || obj[key] === undefined){
+        continue;
+      }
+      result.push(stringifyJSON(key)+':'+stringifyJSON(obj[key]));
+    }
+      return '{'+result.join(',')+'}';
+  }
+
+  return ''+obj;
+
+
 };
